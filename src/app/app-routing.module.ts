@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { CallbackComponent } from './callback/callback.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		redirectTo: 'artistas',
+		redirectTo: '',
 		pathMatch: 'full',
 	},
 	{
@@ -22,6 +23,10 @@ const routes: Routes = [
 	{
 		path: 'favoritos',
 		loadChildren: './favoritos/favoritos.module#FavoritosModule'
+	},
+	{
+		path: 'callback',
+		component: CallbackComponent
 	}
 ];
 

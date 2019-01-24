@@ -1,4 +1,6 @@
-<div class="app-sidebar">
+<app-user></app-user>
+
+<div class="app-sidebar" *ngIf="userService.user">
 	<img src="/assets/img/logo.png"/>
 
 	<div class="main-menu">
