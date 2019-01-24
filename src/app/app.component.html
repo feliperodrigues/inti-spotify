@@ -1,0 +1,28 @@
+<div class="app-sidebar">
+	<img src="/assets/img/logo.png"/>
+
+	<div class="main-menu">
+		<ul>
+			<li>
+				<button mat-button routerLink="/artistas" routerLinkActive="active">Artistas</button>
+			</li>
+			<li>
+				<button mat-button routerLink="/albuns" routerLinkActive="active">Álbuns</button>
+			</li>
+			<li>
+				<button mat-button routerLink="/musicas" routerLinkActive="active">Músicas</button>
+			</li>
+		</ul>
+	</div>
+
+	<div class="footer">
+		<button class="btn btn-block bg-white text-primary">
+			<i class="fas fa-star"></i>
+			Seus Favoritos
+		</button>
+	</div>
+</div>
+
+<div class="app-body">
+	<router-outlet></router-outlet>
+</div>
