@@ -2,6 +2,7 @@
 
 html {
 	height: 100%;
+	overflow-x: hidden;
 }
 
 body {
@@ -9,13 +10,9 @@ body {
 	line-height: 1.5;
 	letter-spacing: 0.5px;
 	font-family: Lato, sans-serif;
-	background: #221B1B url("/assets/img/background.jpg") center center;
+	background: $bg-color url("/assets/img/background.jpg") center center fixed;
 	background-size: cover;
 	height: 100%;
-}
-
-h1, h2, h3, h4, h5, h6 {
-	margin-bottom: 0;
 }
 
 .app-sidebar {
@@ -26,11 +23,12 @@ h1, h2, h3, h4, h5, h6 {
 	top: 0;
 	bottom: 0;
 	width: $sidebar-width;
-	background-color: #F3585A;
+	background-color: $primary;
 	transition: 1s;
+	z-index: 999;
 	@include box-shadow(5px, 0px, 15px, rgba(#000, 0.8));
 
-	@media screen and (max-width: 800px) {
+	@media screen and (max-width: $breakpoint) {
 		left: -$sidebar-width;
 		opacity : 0;
 	}
@@ -67,25 +65,31 @@ h1, h2, h3, h4, h5, h6 {
 .app-body {
 	margin-left: $sidebar-width;
 	min-height: 100%;
-	@media screen and (max-width: 800px) {
+	@media screen and (max-width: $breakpoint) {
 		margin-left: 0;
 	}
-	padding: 60px 40px;
 }
 
 .app-user {
 	position: fixed;
 	right: 0;
+	left: $sidebar-width;
 	padding: 15px 30px;
-	margin-left: $sidebar-width;
 	display: flex;
-	justify-content: end;
+	justify-content: flex-end;
 	align-items: center;
+	z-index: 999;
+
+	@include background-gradient(rgba($bg-color, 1), rgba($bg-color, 0), 0%, 100%);
 
 	img {
 		max-width: 40px;
 		border-radius: 80px;
 		@include box-shadow(0, 5px, 10px, rgba(#000, 0.5));
+	}
+
+	@media screen and (max-width: $breakpoint) {
+		left: 0;
 	}
 }
 
@@ -97,55 +101,4 @@ h1, h2, h3, h4, h5, h6 {
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-}
-
-.artist-albums {
-	border-left: 1px solid rgba(#fff, 0.2);
-	height: 100%;
-	min-width: 200px;
-	margin-left: 30px;
-	padding-left: 30px;
-	min-height: 160px;
-	display: flex;
-	flex-direction: column;
-
-	.table-albums td {
-		padding: 10px 20px;
-		border: none;
-	}
-
-	.table-hover tbody tr:hover {
-		background-color: rgba(#fff, 0.15);
-		cursor: pointer;
-	}
-}
-
-.popularity-badge {
-	background-color: $primary;
-	padding: 5px 10px;
-	font-size: 12px;
-	text-align: center;
-	font-weight: bold;
-	text-transform: uppercase;
-	border-radius: $border-radius;
-}
-
-.genres {
-	font-size: 12px;
-	color: $primary;
-	span {
-		margin-right: 10px;
-	}
-}
-
-.best-result {
-	display: flex;
-	align-items: flex-start;
-
-	img {
-		width: 160px;
-		height: 160px;
-		border-radius: $border-radius;
-		@include box-shadow(0, 5px, 10px, #000);
-	}
 }

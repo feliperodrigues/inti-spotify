@@ -9,3 +9,9 @@
 		box-shadow: $left $top $blur $color;
 	}
 }
+
+@mixin background-gradient($color-start, $color-end, $pct-start : 0%, $pct-end : 100%) {
+	background: -moz-linear-gradient(top, $color-start $pct-start, $color-end $pct-end);
+	background: -webkit-linear-gradient(top, $color-start $pct-start, $color-end $pct-end);
+	background: linear-gradient(to bottom, $color-start $pct-start, $color-end $pct-end);
+}

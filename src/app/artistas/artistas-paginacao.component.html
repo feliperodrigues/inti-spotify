@@ -1,0 +1,24 @@
+<div class="d-flex justify-content-between align-items-center">
+	<span class="text-muted">Total: {{total}} <span class="d-none d-md-inline">artistas</span></span>
+	<div class="">
+		<span class="mr-3 d-none d-md-inline">
+			{{currentPage}} / {{totalPages}}
+		</span>
+
+		<button class="d-none d-md-inline mr-3 pl-2" mat-raised-button color="accent" (click)="changePage(currentPage - 1)" *ngIf="currentPage > 1">
+			<i class="material-icons">keyboard_arrow_left</i>
+			Anterior</button>
+		<button class="d-none d-md-inline pr-2" mat-raised-button color="primary" (click)="changePage(currentPage + 1)" *ngIf="currentPage !== totalPages">
+			Próxima
+			<i class="material-icons">keyboard_arrow_right</i>
+		</button>
+
+		<button class="d-inline d-md-none" mat-icon-button color="accent" (click)="changePage(currentPage - 1)" *ngIf="currentPage > 1">
+			<i class="material-icons">keyboard_arrow_left</i>
+		</button>
+
+		<button class="d-inline d-md-none" mat-icon-button color="primary" (click)="changePage(currentPage + 1)" *ngIf="currentPage !== totalPages">
+			<i class="material-icons">keyboard_arrow_right</i>
+		</button>
+	</div>
+</div>

@@ -1,10 +1,112 @@
-<div class="container-fluid">
+<div class="container-fluid p-5" *ngIf="userService.user">
 	<div class="row">
-		<div class="col-12 pt-5 pl-5">
-			<h2>Artistas</h2>
+		<div class="col-12">
+			<h2 class="mb-3">Artistas</h2>
 
-			<button mat-raised-button color="primary">Material Instalado.</button><br/>
-			<button mat-raised-button color="accent">Material Instalado.</button>
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="Procure pelo nome do artista ou banda..." [(ngModel)]="search" (keydown.enter)="searchArtist()"/>
+			</div>
 		</div>
 	</div>
+
+	<div class="row" *ngIf="!artists">
+		<div class="col-12 d-flex flex-column justify-content-center align-items-center p-5">
+			<h6 class="text-muted text-center">
+				Use a busca para encontrar um artista ou banda.
+			</h6>
+			<i class="text-muted mt-5 fas fa-search fa-5x animated pulse infinite slow"></i>
+		</div>
+	</div>
+
+	<div class="" *ngIf="artists && artists.length === 0">
+
+		<div class="col-12 d-flex flex-column justify-content-center align-items-center p-5">
+			<h6 class="text-muted">
+				Nenhum resultado encontrado para "{{prevSearch}}".
+			</h6>
+			<i class="text-muted mt-5 fas fa-frown fa-5x"></i>
+		</div>
+
+	</div>
+
+	<div class="" *ngIf="artists && artists.length > 0">
+
+		<div class="animated fadeInLeft fast row mb-4" *ngIf="currentPage === 1 && bestResult">
+			<div class="col-12">
+				<div class="d-flex justify-content-between">
+					<h6>Melhor resultado</h6>
+				</div>
+
+				<div class="best-result mt-3">
+					<div (click)="goToArtista(bestResult)" class="artist-image mr-3" [ngStyle]="{'background-image': 'url('+ bestResult.images[2].url +')'}"></div>
+
+					<div class="artist-info">
+						<h3 (click)="goToArtista(bestResult)">{{bestResult.name}}</h3>
+
+						<div class="genres mt-2 mb-2">
+							<span class="" *ngFor="let genres of listGenres(bestResult.genres)">{{genres}}</span>
+						</div>
+
+						<p class="d-none d-lg-block mb-1 text-muted">{{bestResult.followers.total | number }} seguidores</p>
+
+						<span class="popularity-badge" [ngClass]="popularityLabel(bestResult.popularity)" matTooltip="{{bestResult.popularity}}">
+							{{popularityLabel(bestResult.popularity)}}
+						</span>
+					</div>
+
+					<!-- <div class="d-none d-xl-flex artist-last-albums">
+						<span class="text-muted">Álbuns</span>
+
+						<table class="table table-hover table-albums">
+							<tr>
+								<td>retribution</td>
+								<td class="text-primary">15 músicas</td>
+								<td class="text-muted">15 de Novembro de 2015</td>
+							</tr>
+						</table>
+					</div> -->
+				</div>
+			</div>
+		</div>
+
+		<div class="animated fadeIn row mb-3">
+			<div class="col-12">
+				<app-artistas-paginacao [total]="total" [currentPage]="currentPage" [totalPages]="totalPages" (onChangePage)="searchArtist($event)"></app-artistas-paginacao>
+			</div>
+		</div>
+
+		<div class="row mb-3" *ngIf="artists">
+			<div class="animated fadeInLeft col-12" *ngFor="let artist of artists; index as i">
+				<div class="artist-result mt-3">
+					<div (click)="goToArtista(artist)" class="artist-image mr-3" [ngStyle]="{'background-image': 'url(' + artist.images[0].url + ')'}" *ngIf="artist.images.length > 0"></div>
+
+					<div (click)="goToArtista(artist)" class="artist-image mr-3" *ngIf="artist.images.length === 0">
+						<svg width="80" height="79" viewBox="0 0 80 79" xmlns="http://www.w3.org/2000/svg"><title>Artist Icon</title><path d="M53.043 50.486L46.68 46.83c-.636-.366-1.074-.99-1.2-1.716-.125-.725.077-1.462.555-2.02l5.178-6.072c3.287-3.84 5.097-8.743 5.097-13.803V21.24c0-5.85-2.447-11.497-6.716-15.5C45.266 1.686 39.596-.343 33.66.048c-11.12.718-19.83 10.326-19.83 21.87v1.3c0 5.063 1.81 9.964 5.096 13.802l5.18 6.074c.476.558.678 1.295.553 2.02-.127.723-.563 1.35-1.202 1.717l-12.697 7.3C4.124 57.9 0 64.982 0 72.61v5.92h2.97v-5.92c0-6.562 3.548-12.653 9.265-15.902l12.702-7.3c1.407-.81 2.372-2.19 2.65-3.788.276-1.598-.17-3.22-1.222-4.454l-5.18-6.077C18.356 31.787 16.8 27.57 16.8 23.216v-1.3c0-9.982 7.49-18.287 17.05-18.906 5.124-.326 9.99 1.41 13.712 4.9 3.727 3.493 5.778 8.227 5.778 13.332v1.977c0 4.352-1.557 8.57-4.385 11.872l-5.18 6.074c-1.05 1.234-1.496 2.858-1.22 4.456.278 1.597 1.242 2.977 2.647 3.785l4.51 2.59c1.048-.61 2.16-1.12 3.33-1.51zM66.84 37.133v22.71c-2.038-2.203-4.942-3.592-8.17-3.592-6.143 0-11.14 5-11.14 11.14 0 6.143 4.996 11.14 11.14 11.14 6.142 0 11.14-4.997 11.14-11.14V42.28l8.705 5.027L80 44.732l-13.16-7.6zM58.67 75.56c-4.504 0-8.17-3.664-8.17-8.17 0-4.504 3.664-8.168 8.17-8.168 4.504 0 8.168 3.664 8.168 8.17 0 4.504-3.664 8.168-8.17 8.168z" fill="currentColor" fill-rule="evenodd"></path></svg>
+					</div>
+
+					<div class="artist-info">
+						<h5 (click)="goToArtista(artist)">{{artist.name}}</h5>
+
+						<div class="genres mt-2 mb-2">
+							<span class="" *ngFor="let genres of listGenres(artist.genres)">{{genres}}</span>
+						</div>
+
+						<p class="d-none d-lg-block mb-1 text-muted">{{artist.followers.total | number }} seguidores</p>
+
+						<span class="popularity-badge" [ngClass]="popularityLabel(artist.popularity)" matTooltip="{{artist.popularity}}">
+							{{popularityLabel(artist.popularity)}}
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="animated fadeIn row mb-3">
+			<div class="col-12">
+				<app-artistas-paginacao [total]="total" [currentPage]="currentPage" [totalPages]="totalPages" (onChangePage)="searchArtist($event)"></app-artistas-paginacao>
+			</div>
+		</div>
+
+	</div>
+
 </div>

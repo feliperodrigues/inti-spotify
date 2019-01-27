@@ -1,11 +1,60 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
+import { ArtistasService } from './artistas.service';
+import { UserService } from '../user/user.service';
+
+import { IArtista } from './artista.model';
+import { InComponent } from '@app/shared';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-artistas',
 	templateUrl: 'artistas.component.html'
 })
-export class ArtistasComponent {
+export class ArtistasComponent extends InComponent implements OnInit {
 
-	constructor() {
+	public search: string;
+	public prevSearch: string;
+	public artists: IArtista[];
+
+	public bestResult: IArtista;
+
+	public total: number;
+	public totalPages: number;
+	private totalPerPage = 10;
+	public currentPage = 1;
+
+	constructor(public artistasService: ArtistasService, public userService :UserService, private router: Router) {
+		super();
 	}
+
+	ngOnInit() { }
+
+	public searchArtist(page:number = 1): void {
+		this.smoothScroll();
+		this.currentPage = page;
+
+		this.prevSearch = this.search;
+
+		this.artistasService.searchArtist(this.search, page).subscribe(
+			data => {
+				this.artists = <IArtista[]>data.artists.items;
+				this.total = data.artists.total;
+
+				this.totalPages = Math.round(this.total / this.totalPerPage);
+
+				if (this.currentPage === 1) {
+					this.bestResult = this.artists.shift();
+				}
+			}, error => {
+				console.warn(error);
+			}
+		)
+	}
+
+	public goToArtista(artista: IArtista): void {
+		this.artistasService.currentArtista = artista;
+		this.router.navigate(['/artistas/' + artista.id]);
+	}
+
 }

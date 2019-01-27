@@ -1,3 +1,24 @@
+h1, h2, h3, h4, h5, h6 {
+	margin-bottom: 0;
+	font-family: Montserrat, sans-serif;
+}
+
+h1 {
+	font-size: 50px;
+}
+
+a {
+	color: $primary;
+	&:hover {
+		color: lighten($primary, 10%);
+		text-decoration: none;
+	}
+}
+
 .text-primary {
 	color: $primary !important;
+}
+
+.text-small {
+	font-size: 80%;
 }

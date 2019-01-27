@@ -1,0 +1,181 @@
+.artist-last-albums {
+	border-left: 1px solid rgba(#fff, 0.2);
+	height: 100%;
+	min-width: 200px;
+	margin-left: 30px;
+	padding-left: 30px;
+	min-height: 160px;
+	display: flex;
+	flex-direction: column;
+
+	.table-albums td {
+		padding: 10px 20px;
+		border: none;
+	}
+
+	.table-hover tbody tr:hover {
+		background-color: rgba(#fff, 0.15);
+		cursor: pointer;
+	}
+}
+
+.popularity-badge {
+	padding: 5px 10px;
+	font-size: 12px;
+	text-align: center;
+	font-weight: bold;
+	text-transform: uppercase;
+	border-radius: $border-radius;
+	cursor: pointer;
+
+	&.top { background-color: $primary }
+	&.legal { background-color: #58F36A }
+	&.bom { background-color: #F3BD58 }
+	&.desconhecido { background-color: #585858 }
+}
+
+.genres {
+	font-size: 12px;
+	color: $primary;
+	span {
+		margin-right: 10px;
+	}
+}
+
+.best-result, .artist-result {
+	display: flex;
+	align-items: flex-start;
+
+	.artist-image {
+		border-radius: 10px;
+		cursor: pointer;
+		@include box-shadow(0, 5px, 10px, #000);
+		background-size: cover;
+		background-position: center center;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	h3, h5 {
+		transition: 0.5s;
+		cursor: pointer;
+	}
+
+	&:hover {
+		h3, h5 {
+			text-shadow: 0 0 10px $primary;
+		}
+	}
+}
+
+.best-result {
+	.artist-image {
+		min-width: 160px;
+		width: 160px;
+		height: 160px;
+	}
+
+	@media screen and (max-width: $breakpoint) {
+		.artist-image {
+			min-width: 100px;
+			width: 100px;
+			height: 100px;
+		}
+		h3 {
+			font-size: 25px;
+		}
+	}
+}
+
+.artist-result {
+	.artist-image {
+		min-width: 120px;
+		width: 120px;
+		height: 120px;
+	}
+
+	@media screen and (max-width: $breakpoint) {
+		.artist-image {
+			min-width: 80px;
+			width: 80px;
+			height: 80px;
+		}
+		h3 {
+			font-size: 18px;
+		}
+	}
+}
+
+.artist-header {
+	position: relative;
+	width: 100%;
+	height: 300px;
+	background-position: center center;
+	background-size: cover;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+
+	.overlay {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		@include background-gradient(rgba($bg-color, 0), rgba($bg-color, 1), 0%, 90%);
+	}
+
+	.info {
+		position: relative;
+		h1 {
+			color: #fff;
+		}
+	}
+}
+
+.artist-top-tracks {
+	.table-musics td {
+		padding: 10px 20px;
+		border: none;
+		vertical-align: middle;
+	}
+
+	.table-hover tbody tr:hover {
+		background-color: rgba(#fff, 0.15);
+		cursor: pointer;
+	}
+}
+
+.artist-albums {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	flex-wrap: wrap;
+	flex-direction: column;
+
+	.album-image {
+		opacity: 0.8;
+		min-width: 140px;
+		width: 140px;
+		height: 140px;
+
+		border-radius: 10px;
+		cursor: pointer;
+		@include box-shadow(0, 5px, 10px, #000);
+		background-size: cover;
+		background-position: center center;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: 0.3s;
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+
+	.album-info {
+
+	}
+}

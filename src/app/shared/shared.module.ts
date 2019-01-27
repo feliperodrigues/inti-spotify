@@ -5,7 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {
 	MatButtonModule,
-	MatInputModule
+	MatInputModule,
+	MatTooltipModule
 } from '@angular/material';
 
 @NgModule({
@@ -17,6 +18,7 @@ import {
 		/** Material Components */
 		MatButtonModule,
 		MatInputModule,
+		MatTooltipModule,
 		/** END -- Material Components */
 	],
 	declarations: [
@@ -31,6 +33,7 @@ import {
 		/** Material Components */
 		MatButtonModule,
 		MatInputModule,
+		MatTooltipModule
 		/** END -- Material Components */
 	]
 })
