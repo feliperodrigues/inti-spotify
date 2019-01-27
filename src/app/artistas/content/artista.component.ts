@@ -19,6 +19,8 @@ export class ArtistaComponent extends InComponent implements OnInit {
 	public albums: IAlbum[];
 	public topTracks: IMusica[];
 
+	public showMore = false;
+
 	constructor(public artistasService: ArtistasService, public userService :UserService, private activatedRoute: ActivatedRoute) {
 		super();
 	}
@@ -33,7 +35,7 @@ export class ArtistaComponent extends InComponent implements OnInit {
 				return;
 			}
 
-			this.artistasService.currentArtista = undefined; // resetar o componente para ativar animação.
+			this.resetData();
 			this.getArtist(params['id']);
 		});
 	}
@@ -68,5 +70,12 @@ export class ArtistaComponent extends InComponent implements OnInit {
 				console.error(error);
 			}
 		)
+	}
+
+	private resetData(): void {
+		this.showMore = false;
+		this.artistasService.currentArtista = undefined;
+		this.albums = undefined;
+		this.topTracks = undefined;
 	}
 }
