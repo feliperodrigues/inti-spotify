@@ -8,12 +8,14 @@ import {
 	MatInputModule,
 	MatTooltipModule
 } from '@angular/material';
+import { MomentModule } from 'ngx-moment';
 
 @NgModule({
 	imports: [
 		CommonModule,
 		FormsModule,
 		ReactiveFormsModule,
+		MomentModule,
 
 		/** Material Components */
 		MatButtonModule,
@@ -29,6 +31,7 @@ import {
 		CommonModule,
 		FormsModule,
 		ReactiveFormsModule,
+		MomentModule,
 
 		/** Material Components */
 		MatButtonModule,
