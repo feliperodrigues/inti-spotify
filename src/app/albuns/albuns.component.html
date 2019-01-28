@@ -1,1 +1,63 @@
-<h2>Álbuns</h2>
+<div class="animated fadeIn container-fluid p-5" *ngIf="userService.user">
+	<div class="row mt-3">
+		<div class="col-12">
+			<h2 class="mb-3">Álbum</h2>
+
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="Procure pelo nome do álbum..." [(ngModel)]="search" (keydown.enter)="searchAlbum()"/>
+			</div>
+		</div>
+	</div>
+
+	<div class="row" *ngIf="!albums">
+		<div class="col-12 d-flex flex-column justify-content-center align-items-center p-5">
+			<h6 class="text-muted text-center">
+				Use a busca para encontrar um álbum.
+			</h6>
+			<i class="text-muted mt-5 fas fa-layer-group fa-5x animated pulse infinite slow"></i>
+		</div>
+	</div>
+
+	<div class="" *ngIf="albums && albums.length === 0">
+
+		<div class="col-12 d-flex flex-column justify-content-center align-items-center p-5">
+			<h6 class="text-muted">
+				Nenhum resultado encontrado para "{{prevSearch}}".
+			</h6>
+			<i class="text-muted mt-5 fas fa-frown fa-5x"></i>
+		</div>
+
+	</div>
+
+	<div class="" *ngIf="albums && albums.length > 0">
+		<div class="animated fadeIn row mb-3">
+			<div class="col-12">
+				<app-paginacao [total]="total" [currentPage]="currentPage" [totalPages]="totalPages" (onChangePage)="searchAlbum($event)" [typeSingular]="'álbum'" [typePlural]="'álbuns'"></app-paginacao>
+			</div>
+		</div>
+
+		<div class="row mb-3">
+			<div class="animated fadeInLeft col-12" *ngFor="let album of albums; index as i">
+				<div class="album-result mt-3">
+					<div (click)="goToAlbum(album)" class="album-image mr-3" [ngStyle]="{'background-image': 'url(' + album.images[0].url + ')'}" *ngIf="album.images.length > 0"></div>
+
+					<div class="album-info">
+						<h5 (click)="goToAlbum(album)">{{album.name}}</h5>
+						<h6 class="mt-2 text-muted" *ngIf="album.artists.length === 1">{{album.artists[0].name}}</h6>
+						<h6 class="mt-2 text-muted" *ngIf="album.artists.length > 1">Vários artistas</h6>
+						<h6 class="mt-2 text-muted text-smaller">
+							{{album.release_date | amLocal | amDateFormat: 'DD-MM-YYYY'}}
+						</h6>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="animated fadeIn row mb-3">
+			<div class="col-12">
+				<app-paginacao [total]="total" [currentPage]="currentPage" [totalPages]="totalPages" (onChangePage)="searchAlbum($event)" [typeSingular]="'álbum'" [typePlural]="'álbuns'"></app-paginacao>
+			</div>
+		</div>
+	</div>
+
+</div>
