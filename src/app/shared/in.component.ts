@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class InComponent {
 
+	public loading = false;
+
 	public listGenres(genres: string[]): string[] {
 		return genres.slice(0, 3);
 	}

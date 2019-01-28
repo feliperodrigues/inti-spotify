@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IUser } from './user.model';
+import { IUser } from '@app/model';
 
 @Injectable({
 	providedIn: 'root'
@@ -9,6 +9,7 @@ import { IUser } from './user.model';
 export class UserService {
 
 	public user:IUser;
+	public nextPath: string;
 
 	constructor(private http: HttpClient) { }
 

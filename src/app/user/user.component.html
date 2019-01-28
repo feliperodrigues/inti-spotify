@@ -1,21 +1,43 @@
 <div class="app-user" *ngIf="userService.user">
 
-	<h6>{{userService.user.display_name}}</h6>
+	<div class="">
+		<img class="mobile-logo" src="/inti-spotify/assets/img/logo.png" routerLink="/artistas"/>
+	</div>
 
-	<img class="mx-3" src="{{userService.user.images[0].url}}">
+	<div class="d-flex align-items-center">
+		<div class="favorites d-inline d-lg-none">
+			<button class="" mat-icon-button color="accent" routerLink="/favoritos">
+				<i class="fas fa-star fa-lg"></i>
+			</button>
 
-	<button class="animated fadeIn" mat-icon-button color="warn" (click)="logout()"><i class="fas fa-power-off fa-lg"></i></button>
+			<div class="favorites-badge" *ngIf="favoritosService.countFavorites() > 0">
+				{{favoritosService.countFavorites()}}
+			</div>
+		</div>
+
+		<h6 class="d-none d-md-block">{{userService.user.display_name}}</h6>
+
+		<img class="mx-3 user-image" src="{{userService.user.images[0].url}}" *ngIf="userService.user.images.length > 0">
+
+		<button class="animated fadeIn" mat-icon-button color="warn" (click)="openLogoutDialog()"><i class="fas fa-power-off fa-lg"></i></button>
+	</div>
 
 </div>
 
 <div class="animated fadeIn app-login" *ngIf="!userService.user">
-	<img class="mb-3" src="/assets/img/logo.png"/>
+	<img class="mb-3" src="/inti-spotify/assets/img/logo.png"/>
 
 	<h6 class="mb-3">Procure artistas, músicas e álbuns!</h6>
 
-	<a href="https://accounts.spotify.com/authorize?client_id=ad7581618e5a48af980fdbecd2f1dc26&redirect_uri=http:%2F%2Flocalhost:4200%2Fcallback&response_type=token&state=123" mat-raised-button color="primary">
-		Login com Spotify
+	<a href="https://accounts.spotify.com/authorize?client_id=ad7581618e5a48af980fdbecd2f1dc26&redirect_uri=https:%2F%2Finnercoders.com.br%2Finti-spotify%2Fcallback&response_type=token&state=123" mat-raised-button color="primary" [ngClass]="{'disabled' : loading}">
+		Login com spotify
 
 		<i class="fab fa-spotify fa-lg"></i>
 	</a>
+
+	<!-- <a href="https://accounts.spotify.com/authorize?client_id=ad7581618e5a48af980fdbecd2f1dc26&redirect_uri=http:%2F%2Flocalhost:4200%2Fcallback&response_type=token&state=123" mat-raised-button color="primary" [ngClass]="{'disabled' : loading}">
+		Login com spotify
+
+		<i class="fab fa-spotify fa-lg"></i>
+	</a> -->
 </div>

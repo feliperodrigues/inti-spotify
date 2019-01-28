@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {
-	MatButtonModule,
+	MatButtonModule, MatDialogModule,
 	MatInputModule,
 	MatTooltipModule
 } from '@angular/material';
@@ -22,6 +22,7 @@ import { MomentModule } from 'ngx-moment';
 		MatButtonModule,
 		MatInputModule,
 		MatTooltipModule,
+		MatDialogModule,
 		/** END -- Material Components */
 	],
 	declarations: [
@@ -40,7 +41,8 @@ import { MomentModule } from 'ngx-moment';
 		/** Material Components */
 		MatButtonModule,
 		MatInputModule,
-		MatTooltipModule
+		MatTooltipModule,
+		MatDialogModule,
 		/** END -- Material Components */
 	]
 })

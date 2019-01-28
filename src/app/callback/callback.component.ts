@@ -13,9 +13,10 @@ export class CallbackComponent {
 
 		this.userService.spotifyMe().subscribe(
 			data => {
-				console.log(data);
 				this.userService.user = data;
-				this.router.navigate(['/artistas']);
+
+				this.router.navigate([localStorage.getItem('nextUrl')]);
+				localStorage.removeItem('nextUrl');
 			}, error => {
 				console.error(error);
 			}

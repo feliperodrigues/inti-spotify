@@ -1,7 +1,7 @@
 <app-user></app-user>
 
 <div class="app-sidebar" *ngIf="userService.user">
-	<img src="/assets/img/logo.png"/>
+	<img class="logo" src="/inti-spotify/assets/img/logo.png" routerLink="/artistas"/>
 
 	<div class="main-menu">
 		<ul>
@@ -18,13 +18,15 @@
 	</div>
 
 	<div class="footer">
-		<button class="btn btn-block bg-white text-primary">
+		<button class="btn btn-block bg-white text-primary" routerLink="/favoritos">
 			<i class="fas fa-star"></i>
-			Seus Favoritos
+			Seus Favoritos ({{favoritosService.countFavorites()}})
 		</button>
 	</div>
 </div>
 
-<div class="app-body">
+<div class="app-body mb-5 mb-lg-0">
 	<router-outlet></router-outlet>
 </div>
+
+<app-mobile-menu *ngIf="userService.user"></app-mobile-menu>
