@@ -18,7 +18,8 @@
 			"dom"
 		],
 		"paths": {
-			"@app/shared": [ "app/shared" ]
+			"@app/shared": [ "app/shared" ],
+			"@app/model": [ "app/model" ]
 		}
 	}
 }

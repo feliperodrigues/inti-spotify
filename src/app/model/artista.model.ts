@@ -9,4 +9,6 @@ export interface IArtista {
 	type: string;
 	uri: string;
 	external_urls: any[];
+
+	isFavorite: boolean;
 }

@@ -1,7 +1,8 @@
-import { IArtista } from '../artistas/artista.model';
+import { IArtista } from './artista.model';
+import { IAlbum } from '@app/model';
 
 export interface IMusica {
-	album: any;
+	album: IAlbum;
 	artists: IArtista[];
 	duration_ms: number;
 	explicit: boolean;
@@ -9,4 +10,6 @@ export interface IMusica {
 	id: string;
 	name: string;
 	popularity: number;
+
+	isFavorite: boolean;
 }
