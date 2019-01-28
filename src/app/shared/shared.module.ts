@@ -8,6 +8,7 @@ import {
 	MatInputModule,
 	MatTooltipModule
 } from '@angular/material';
+import { PaginacaoComponent } from './paginacao.component';
 import { MomentModule } from 'ngx-moment';
 
 @NgModule({
@@ -24,6 +25,7 @@ import { MomentModule } from 'ngx-moment';
 		/** END -- Material Components */
 	],
 	declarations: [
+		PaginacaoComponent
 	],
 	providers: [
 	],
@@ -32,6 +34,8 @@ import { MomentModule } from 'ngx-moment';
 		FormsModule,
 		ReactiveFormsModule,
 		MomentModule,
+
+		PaginacaoComponent,
 
 		/** Material Components */
 		MatButtonModule,

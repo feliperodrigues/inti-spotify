@@ -1,10 +1,10 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-	selector: 'app-artistas-paginacao',
-	templateUrl: 'artistas-paginacao.component.html'
+	selector: 'app-paginacao',
+	templateUrl: 'paginacao.component.html'
 })
-export class ArtistasPaginacaoComponent {
+export class PaginacaoComponent {
 
 	@Input()
 	public total: number;
@@ -14,6 +14,12 @@ export class ArtistasPaginacaoComponent {
 
 	@Input()
 	public totalPages: number;
+
+	@Input()
+	public typeSingular: string;
+
+	@Input()
+	public typePlural: string;
 
 	@Output()
 	public onChangePage: EventEmitter<number> = new EventEmitter();
