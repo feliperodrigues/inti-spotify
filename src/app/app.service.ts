@@ -4,9 +4,9 @@ import { HttpHeaders } from '@angular/common/http';
 @Injectable()
 export class AppService {
 
-	protected getHeaders() {
+	protected getHeaders(contentType: string = 'application/json;') {
 		let headers = new HttpHeaders({
-			'Content-Type':  'application/json; charset=UTF-8',
+			'Content-Type':  contentType,
 			'Authorization': 'Bearer ' + localStorage.getItem('access_token')
 		});
 

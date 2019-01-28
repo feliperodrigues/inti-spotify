@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { InComponent } from '@app/shared';
+import { IArtista } from '@app/model';
 
 import { ArtistasService } from './artistas.service';
 import { UserService } from '../user/user.service';
-
-import { IArtista } from './artista.model';
-import { InComponent } from '@app/shared';
-import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-artistas',
@@ -24,17 +24,26 @@ export class ArtistasComponent extends InComponent implements OnInit {
 	private totalPerPage = 10;
 	public currentPage = 1;
 
-	constructor(public artistasService: ArtistasService, public userService :UserService, private router: Router) {
+	constructor(public artistasService: ArtistasService, public userService :UserService, private activatedRoute: ActivatedRoute, private router: Router) {
 		super();
 	}
 
-	ngOnInit() { }
+	ngOnInit() {
+		this.activatedRoute.params.forEach(params => {
+			if(params['q']) {
+				this.search = params['q'];
+				this.searchArtist();
+				return;
+			}
+		});
+	}
 
 	public searchArtist(page:number = 1): void {
 		this.smoothScroll();
 		this.currentPage = page;
 
 		this.prevSearch = this.search;
+		this.router.navigate(['/artistas', {q : this.search}]);
 
 		this.artistasService.searchArtist(this.search, page).subscribe(
 			data => {

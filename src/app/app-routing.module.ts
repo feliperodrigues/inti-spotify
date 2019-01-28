@@ -5,7 +5,7 @@ import { CallbackComponent } from './callback/callback.component';
 const routes: Routes = [
 	{
 		path: '',
-		redirectTo: '',
+		redirectTo: 'artistas',
 		pathMatch: 'full',
 	},
 	{

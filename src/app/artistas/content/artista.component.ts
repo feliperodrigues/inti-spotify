@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import { InComponent } from '@app/shared';
+import { IAlbum, IArtista, IMusica } from '@app/model';
+
 import { ArtistasService } from '../artistas.service';
 import { UserService } from '../../user/user.service';
+import { FavoritosService } from '../../favoritos/favoritos.service';
 
-import { InComponent } from '@app/shared';
-import { IAlbum } from '../../albuns/album.model';
-import { IMusica } from '../../musicas/musica.model';
 
 @Component({
 	selector: 'app-artista',
@@ -14,14 +15,17 @@ import { IMusica } from '../../musicas/musica.model';
 })
 export class ArtistaComponent extends InComponent implements OnInit {
 
-	private artistId: string;
-
 	public albums: IAlbum[];
 	public topTracks: IMusica[];
 
 	public showMore = false;
+	public isFavorite: boolean;
 
-	constructor(public artistasService: ArtistasService, public userService :UserService, private activatedRoute: ActivatedRoute) {
+	public get currentArtista(): IArtista {
+		return this.artistasService.currentArtista;
+	}
+
+	constructor(public artistasService: ArtistasService, public userService :UserService, public favoritosService: FavoritosService, private activatedRoute: ActivatedRoute) {
 		super();
 	}
 
@@ -30,8 +34,7 @@ export class ArtistaComponent extends InComponent implements OnInit {
 			this.smoothScroll();
 
 			if(this.artistasService.currentArtista && this.artistasService.currentArtista.id === params['id']) {
-				this.getAlbuns();
-				this.getTopTracks();
+				this.loadArtistData();
 				return;
 			}
 
@@ -44,8 +47,7 @@ export class ArtistaComponent extends InComponent implements OnInit {
 		this.artistasService.getArtist(id).subscribe(
 			data => {
 				this.artistasService.currentArtista = data;
-				this.getAlbuns();
-				this.getTopTracks();
+				this.loadArtistData();
 			}, error => {
 				console.error(error);
 			}
@@ -70,6 +72,29 @@ export class ArtistaComponent extends InComponent implements OnInit {
 				console.error(error);
 			}
 		)
+	}
+
+	public saveFavorite(item: IArtista) {
+		this.favoritosService.saveFavorite(item, 'artistas');
+		this.checkFavorite();
+	}
+
+	public checkFavorite(): void {
+		const favorites: string[] = this.favoritosService.getFavorites('artistas');
+		for(let i = 0; i < favorites.length; i++) {
+			if(favorites[i] === this.artistasService.currentArtista.id) {
+				this.isFavorite = true;
+				return;
+			}
+		}
+
+		this.isFavorite = false;
+	}
+
+	private loadArtistData() {
+		this.checkFavorite();
+		this.getAlbuns();
+		this.getTopTracks();
 	}
 
 	private resetData(): void {

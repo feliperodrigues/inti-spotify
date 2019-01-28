@@ -1,5 +1,5 @@
-<div class="container-fluid p-5" *ngIf="userService.user">
-	<div class="row">
+<div class="animated fadeIn container-fluid p-5" *ngIf="userService.user">
+	<div class="row mt-3">
 		<div class="col-12">
 			<h2 class="mb-3">Artistas</h2>
 
@@ -14,11 +14,11 @@
 			<h6 class="text-muted text-center">
 				Use a busca para encontrar um artista ou banda.
 			</h6>
-			<i class="text-muted mt-5 fas fa-search fa-5x animated pulse infinite slow"></i>
+			<i class="text-muted mt-5 fas fa-users fa-5x animated pulse infinite slow"></i>
 		</div>
 	</div>
 
-	<div class="" *ngIf="artists && artists.length === 0">
+	<div class="" *ngIf="artists && artists.length === 0 && !bestResult">
 
 		<div class="col-12 d-flex flex-column justify-content-center align-items-center p-5">
 			<h6 class="text-muted">
@@ -29,49 +29,48 @@
 
 	</div>
 
-	<div class="" *ngIf="artists && artists.length > 0">
+	<div class="animated fadeInLeft fast row mb-4" *ngIf="currentPage === 1 && bestResult">
+		<div class="col-12">
+			<div class="d-flex justify-content-between">
+				<h6>Melhor resultado</h6>
+			</div>
 
-		<div class="animated fadeInLeft fast row mb-4" *ngIf="currentPage === 1 && bestResult">
-			<div class="col-12">
-				<div class="d-flex justify-content-between">
-					<h6>Melhor resultado</h6>
-				</div>
+			<div class="best-result mt-3">
+				<div (click)="goToArtista(bestResult)" class="artist-image mr-3" [ngStyle]="{'background-image': 'url('+ bestResult.images[2].url +')'}"></div>
 
-				<div class="best-result mt-3">
-					<div (click)="goToArtista(bestResult)" class="artist-image mr-3" [ngStyle]="{'background-image': 'url('+ bestResult.images[2].url +')'}"></div>
+				<div class="artist-info">
+					<h3 (click)="goToArtista(bestResult)">{{bestResult.name}}</h3>
 
-					<div class="artist-info">
-						<h3 (click)="goToArtista(bestResult)">{{bestResult.name}}</h3>
-
-						<div class="genres mt-2 mb-2">
-							<span class="" *ngFor="let genres of listGenres(bestResult.genres)">{{genres}}</span>
-						</div>
-
-						<p class="d-none d-lg-block mb-1 text-muted">{{bestResult.followers.total | number }} seguidores</p>
-
-						<span class="popularity-badge" [ngClass]="popularityLabel(bestResult.popularity)" matTooltip="{{bestResult.popularity}}">
-							{{popularityLabel(bestResult.popularity)}}
-						</span>
+					<div class="genres mt-2 mb-2">
+						<span class="" *ngFor="let genres of listGenres(bestResult.genres)">{{genres}}</span>
 					</div>
 
-					<!-- <div class="d-none d-xl-flex artist-last-albums">
-						<span class="text-muted">Álbuns</span>
+					<p class="d-none d-lg-block mb-1 text-muted">{{bestResult.followers.total | number }} seguidores</p>
 
-						<table class="table table-hover table-albums">
-							<tr>
-								<td>retribution</td>
-								<td class="text-primary">15 músicas</td>
-								<td class="text-muted">15 de Novembro de 2015</td>
-							</tr>
-						</table>
-					</div> -->
+					<span class="popularity-badge" [ngClass]="popularityLabel(bestResult.popularity)" matTooltip="{{bestResult.popularity}}">
+							{{popularityLabel(bestResult.popularity)}}
+						</span>
 				</div>
+
+				<!-- <div class="d-none d-xl-flex artist-last-albums">
+					<span class="text-muted">Álbuns</span>
+
+					<table class="table table-hover table-albums">
+						<tr>
+							<td>retribution</td>
+							<td class="text-primary">15 músicas</td>
+							<td class="text-muted">15 de Novembro de 2015</td>
+						</tr>
+					</table>
+				</div> -->
 			</div>
 		</div>
+	</div>
 
+	<div class="" *ngIf="artists && artists.length > 0">
 		<div class="animated fadeIn row mb-3">
 			<div class="col-12">
-				<app-artistas-paginacao [total]="total" [currentPage]="currentPage" [totalPages]="totalPages" (onChangePage)="searchArtist($event)"></app-artistas-paginacao>
+				<app-paginacao [total]="total" [currentPage]="currentPage" [totalPages]="totalPages" (onChangePage)="searchArtist($event)" [typeSingular]="'artista'" [typePlural]="'artistas'"></app-paginacao>
 			</div>
 		</div>
 
@@ -103,7 +102,7 @@
 
 		<div class="animated fadeIn row mb-3">
 			<div class="col-12">
-				<app-artistas-paginacao [total]="total" [currentPage]="currentPage" [totalPages]="totalPages" (onChangePage)="searchArtist($event)"></app-artistas-paginacao>
+				<app-paginacao [total]="total" [currentPage]="currentPage" [totalPages]="totalPages" (onChangePage)="searchArtist($event)" [typeSingular]="'artista'" [typePlural]="'artistas'"></app-paginacao>
 			</div>
 		</div>
 

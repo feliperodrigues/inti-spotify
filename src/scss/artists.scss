@@ -134,19 +134,6 @@
 	}
 }
 
-.artist-top-tracks {
-	.table-musics td {
-		padding: 10px 20px;
-		border: none;
-		vertical-align: middle;
-	}
-
-	.table-hover tbody tr:hover {
-		background-color: rgba(#fff, 0.15);
-		cursor: pointer;
-	}
-}
-
 .artist-albums {
 	display: flex;
 	justify-content: flex-start;
@@ -176,6 +163,8 @@
 	}
 
 	.album-info {
-
+		h6 {
+			max-width: 140px;
+		}
 	}
 }

@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 
+import { SharedModule } from '@app/shared';
+
 import { ArtistasComponent } from './artistas.component';
 import { ArtistasRoutingModule } from './artistas-routing.module';
-import { SharedModule } from '@app/shared';
-import { ArtistasPaginacaoComponent } from './artistas-paginacao.component';
 import { ArtistaComponent } from './content/artista.component';
 
 @NgModule({
@@ -13,7 +13,6 @@ import { ArtistaComponent } from './content/artista.component';
 	],
 	declarations: [
 		ArtistasComponent,
-		ArtistasPaginacaoComponent,
 		ArtistaComponent,
 	]
 })

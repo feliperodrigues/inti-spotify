@@ -1,70 +1,74 @@
-<div class="animated fadeIn artist-header" *ngIf="artistasService.currentArtista" [ngStyle]="{'background-image': 'url('+ artistasService.currentArtista.images[0].url +')'}">
+<div *ngIf="userService.user">
+	<div class="animated fadeIn artist-header" *ngIf="currentArtista" [ngStyle]="{'background-image': 'url('+ currentArtista.images[0].url +')'}">
 
-	<div class="overlay"></div>
+		<div class="overlay"></div>
 
-	<div class="info">
-		<h1>{{artistasService.currentArtista.name}}</h1>
-		<div class="genres mb-2">
-			<span class="" *ngFor="let genres of listGenres(artistasService.currentArtista.genres)">{{genres}}</span>
-		</div>
+		<div class="info">
+			<h1>{{currentArtista.name}}</h1>
+			<div class="genres mb-2">
+				<span class="" *ngFor="let genres of listGenres(currentArtista.genres)">{{genres}}</span>
+			</div>
 
-		<div class="mt-3">
-			<button class="btn btn-primary"><i class="fas fa-star"></i> Adicionar Favoritos</button>
-			<button class="ml-3" mat-icon-button color="accent"><i class="fas fa-external-link-alt fa-lg"></i></button>
-		</div>
-	</div>
-
-</div>
-
-<div class="animated fadeIn container-fluid px-5 pb-5" *ngIf="artistasService.currentArtista">
-	<div class="row">
-		<div class="col-12 artist-top-tracks">
-			<h2 class="mb-3">Músicas Populares</h2>
-
-			<table class="table table-hover table-musics">
-				<ng-container *ngFor="let track of topTracks; index as i">
-					<tr class="animated fadeIn" *ngIf="i <= 4 || i > 4 && showMore">
-						<td>
-							<a mat-icon-button href="{{track.external_urls.spotify}}" target="_blank" color="primary" matTooltip="{{track.popularity}} popularidade">
-								<i class="material-icons">
-									play_circle_outline
-								</i>
-							</a>
-						</td>
-						<td>{{track.name}}</td>
-						<td class="d-none d-sm-table-cell">
-							<a *ngFor="let artist of track.artists; index as i" routerLink="/artistas/{{artist.id}}">
-								{{artist.name}}<span class="text-muted" *ngIf="i + 1 < track.artists.length">,</span>
-							</a>
-						</td>
-						<td class="d-none d-md-table-cell text-muted"><span *ngIf="track.explicit">explícito</span></td>
-						<td class="d-none d-md-table-cell text-primary">{{trackDuration(track.duration_ms)}}</td>
-					</tr>
-				</ng-container>
-			</table>
-
-			<div class="text-center">
-				<button class="pr-2" mat-button (click)="showMore = !showMore">
-					<span *ngIf="!showMore">mostrar mais</span>
-					<i class="material-icons" *ngIf="!showMore">keyboard_arrow_down</i>
-					<span *ngIf="showMore">mostrar menos</span>
-					<i class="material-icons" *ngIf="showMore">keyboard_arrow_up</i>
-				</button>
+			<div class="mt-3">
+				<button class="btn btn-success" (click)="saveFavorite(currentArtista)" *ngIf="!isFavorite"><i class="fas fa-star"></i> Adicionar Favoritos</button>
+				<button class="btn btn-danger" (click)="saveFavorite(currentArtista)" *ngIf="isFavorite"><i class="fas fa-times"></i> Remover Favorito</button>
+				<button class="ml-3" mat-icon-button color="accent"><i class="fas fa-external-link-alt fa-lg"></i></button>
 			</div>
 		</div>
+
 	</div>
 
-	<div class="row">
-		<div class="col-12">
-			<h2 class="mb-3">Álbuns</h2>
+	<div class="animated fadeIn container-fluid px-5 pb-5" *ngIf="currentArtista">
+		<div class="row">
+			<div class="col-12 artist-top-tracks">
+				<h2 class="mb-3">Músicas Populares</h2>
+
+				<table class="table table-hover table-musics">
+					<ng-container *ngFor="let track of topTracks; index as i">
+						<tr class="animated fadeIn" *ngIf="i <= 4 || i > 4 && showMore">
+							<td>
+								<a mat-icon-button href="{{track.external_urls.spotify}}" target="_blank" color="primary" matTooltip="{{track.popularity}} popularidade">
+									<i class="material-icons">
+										play_circle_outline
+									</i>
+								</a>
+							</td>
+							<td>{{track.name}}</td>
+							<td class="d-none d-sm-table-cell">
+								<a *ngFor="let artist of track.artists; index as i" routerLink="/artistas/{{artist.id}}">
+									{{artist.name}}<span class="text-muted" *ngIf="i + 1 < track.artists.length">,</span>
+								</a>
+							</td>
+							<td class="d-none d-md-table-cell text-muted"><span *ngIf="track.explicit">explícito</span></td>
+							<td class="d-none d-md-table-cell text-primary">{{trackDuration(track.duration_ms)}}</td>
+						</tr>
+					</ng-container>
+				</table>
+
+				<div class="text-center">
+					<button class="pr-2" mat-button (click)="showMore = !showMore">
+						<span *ngIf="!showMore">mostrar mais</span>
+						<i class="material-icons" *ngIf="!showMore">keyboard_arrow_down</i>
+						<span *ngIf="showMore">mostrar menos</span>
+						<i class="material-icons" *ngIf="showMore">keyboard_arrow_up</i>
+					</button>
+				</div>
+			</div>
 		</div>
 
-		<div class="col-12 d-flex justify-content-center justify-content-lg-start flex-wrap">
-			<div class="artist-albums mt-3 text-center mx-2" *ngFor="let album of albums">
-				<div class="album-image mr-3" [ngStyle]="{'background-image': 'url(' + album.images[0].url + ')'}" *ngIf="album.images.length > 0" matTooltip="{{album.name}}"></div>
+		<div class="row">
+			<div class="col-12">
+				<h2 class="mb-3">Álbuns</h2>
+			</div>
 
-				<div class="album-info mt-3">
-					<span class="text-muted text-small">{{album.total_tracks}} músicas</span>
+			<div class="col-12 d-flex justify-content-center justify-content-lg-start flex-wrap">
+				<div class="artist-albums mt-3 text-center mx-2" *ngFor="let album of albums">
+					<div routerLink="/albuns/{{album.id}}" class="album-image mr-3" [ngStyle]="{'background-image': 'url(' + album.images[0].url + ')'}" *ngIf="album.images.length > 0"></div>
+
+					<div class="album-info mt-3">
+						<h6>{{album.name}}</h6>
+						<span class="text-muted text-small">{{album.total_tracks}} músicas</span>
+					</div>
 				</div>
 			</div>
 		</div>

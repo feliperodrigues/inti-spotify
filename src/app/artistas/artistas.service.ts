@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AppService } from '../app.service';
-import { IArtista } from './artista.model';
+import { IArtista } from '@app/model';
 
 @Injectable({
 	providedIn: 'root'
@@ -22,7 +22,7 @@ export class ArtistasService extends AppService {
 			offset = page * 10;
 		}
 
-		return this.http.get<any>(this.baseApi + 'search?q='+search+'&type=artist&offset='+offset+'&limit=10', this.getHeaders());
+		return this.http.get<any>(this.baseApi + 'search?q='+search+'&type=artist&offset='+offset+'&limit=10', this.getHeaders('application/x-www-form-urlencoded'));
 	}
 
 	public getArtist(id?: string): Observable<any> {
@@ -44,5 +44,9 @@ export class ArtistasService extends AppService {
 			id = this.currentArtista.id;
 		}
 		return this.http.get<any>(this.baseApi + 'artists/'+ id +'/top-tracks?market=from_token', this.getHeaders());
+	}
+
+	public getSeveralArtists(artistsIds: string[]): Observable<any> {
+		return this.http.get<any>(this.baseApi + 'artists?ids=' + artistsIds.join(','), this.getHeaders());
 	}
 }
