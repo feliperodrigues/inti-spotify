@@ -1,1 +1,82 @@
-<h2>Músicas</h2>
+<div class="animated fadeIn container-fluid p-5" *ngIf="userService.user">
+	<div class="row mt-3">
+		<div class="col-12">
+			<h2 class="mb-3">Músicas</h2>
+
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="Procure uma música..." [(ngModel)]="search" (keydown.enter)="searchMusic()"/>
+			</div>
+		</div>
+	</div>
+
+	<div class="row" *ngIf="!tracks">
+		<div class="col-12 d-flex flex-column justify-content-center align-items-center p-5">
+			<h6 class="text-muted text-center">
+				Use a busca para encontrar uma música.
+			</h6>
+			<i class="text-muted mt-5 fas fa-music fa-5x animated wobble infinite slow"></i>
+		</div>
+	</div>
+
+	<div class="" *ngIf="tracks && tracks.length === 0">
+
+		<div class="col-12 d-flex flex-column justify-content-center align-items-center p-5">
+			<h6 class="text-muted">
+				Nenhum resultado encontrado para "{{prevSearch}}".
+			</h6>
+			<i class="text-muted mt-5 fas fa-frown fa-5x"></i>
+		</div>
+
+	</div>
+
+	<div class="" *ngIf="tracks && tracks.length > 0">
+		<div class="animated fadeIn row mb-3">
+			<div class="col-12">
+				<app-paginacao [total]="total" [currentPage]="currentPage" [totalPages]="totalPages" (onChangePage)="searchMusic($event)" [typeSingular]="'música'" [typePlural]="'músicas'"></app-paginacao>
+			</div>
+		</div>
+
+		<div class="row mb-3">
+			<div class="animated fadeInLeft col-12">
+				<table class="table table-hover table-musics">
+					<tr class="animated fadeIn" *ngFor="let track of tracks; index as i">
+						<td>
+							<a mat-icon-button href="{{track.external_urls.spotify}}" target="_blank" color="primary" matTooltip="{{track.popularity}} popularidade">
+								<i class="material-icons">
+									play_circle_outline
+								</i>
+							</a>
+							<a mat-icon-button target="_blank" matTooltip="Adicionar favoritos" (click)="saveFavorite(track)">
+								<i class="material-icons" *ngIf="!track.isFavorite">
+									add
+								</i>
+								<i class="material-icons" *ngIf="track.isFavorite">
+									check
+								</i>
+							</a>
+						</td>
+						<td><img class="track-album" src="{{track.album.images[0].url}}" matTooltip="{{track.album.name}}" (click)="goToAlbum(track.album)"/></td>
+						<td>
+							{{track.name}}
+							<h6 class="text-muted text-smaller d-block d-sm-none" (click)="goToArtista(track.artists[0])">{{track.artists[0].name}}</h6>
+						</td>
+						<td class="d-none d-sm-table-cell">
+							<a *ngFor="let artist of track.artists; index as i" routerLink="/artistas/{{artist.id}}">
+								{{artist.name}}<span class="text-muted" *ngIf="i + 1 < track.artists.length">,</span>
+							</a>
+						</td>
+						<td class="d-none d-md-table-cell text-muted"><span *ngIf="track.explicit">explícito</span></td>
+						<td class="d-none d-md-table-cell text-primary">{{trackDuration(track.duration_ms)}}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+
+		<div class="animated fadeIn row mb-3">
+			<div class="col-12">
+				<app-paginacao [total]="total" [currentPage]="currentPage" [totalPages]="totalPages" (onChangePage)="searchMusic($event)" [typeSingular]="'música'" [typePlural]="'músicas'"></app-paginacao>
+			</div>
+		</div>
+	</div>
+
+</div>
