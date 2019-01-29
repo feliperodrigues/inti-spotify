@@ -1,4 +1,4 @@
-<div class="animated fadeIn container-fluid p-5" *ngIf="userService.user">
+<div class="animated fadeIn container-fluid py-5 px-3 px-md-5" *ngIf="userService.user">
 	<div class="row mt-3">
 		<div class="col-12">
 			<h2 class="mb-3">Favoritos</h2>
@@ -58,7 +58,7 @@
 
 						<div class="album-info">
 							<h5 (click)="goToAlbum(album)">{{album.name}}</h5>
-							<h6 class="mt-2 text-muted" *ngIf="album.artists.length === 1">{{album.artists[0].name}}</h6>
+							<h6 class="mt-2 text-muted album-artist" *ngIf="album.artists.length === 1" routerLink="/artistas/{{album.artists[0].id}}">{{album.artists[0].name}}</h6>
 							<h6 class="mt-2 text-muted" *ngIf="album.artists.length > 1">Vários artistas</h6>
 							<h6 class="mt-2 text-muted text-smaller d-none d-sm-block">
 								{{album.release_date | amLocal | amDateFormat: 'DD-MM-YYYY'}}
@@ -102,7 +102,7 @@
 					<td><img class="track-album" src="{{track.album.images[0].url}}" matTooltip="{{track.album.name}}" (click)="goToAlbum(track.album)"/></td>
 					<td>
 						{{track.name}}
-						<h6 class="text-muted text-smaller d-block d-sm-none" (click)="goToArtista(track.artists[0])">{{track.artists[0].name}}</h6>
+						<h6 class="text-muted text-small d-block d-sm-none" routerLink="/artistas/{{track.artists[0].id}}">{{track.artists[0].name}}</h6>
 					</td>
 					<td class="d-none d-sm-table-cell">
 						<a *ngFor="let artist of track.artists; index as i" routerLink="/artistas/{{artist.id}}">

@@ -26,6 +26,12 @@
 		}
 	}
 
+	.album-info {
+		.album-artist {
+			cursor: pointer;
+		}
+	}
+
 	h3, h5 {
 		transition: 0.5s;
 		cursor: pointer;
