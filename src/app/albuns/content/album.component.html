@@ -32,6 +32,14 @@
 										play_circle_outline
 									</i>
 								</a>
+								<button mat-icon-button target="_blank" matTooltip="Adicionar favoritos" (click)="saveFavoriteMusic(track)">
+									<i class="material-icons" *ngIf="!track.isFavorite">
+										add
+									</i>
+									<i class="material-icons" *ngIf="track.isFavorite">
+										check
+									</i>
+								</button>
 							</td>
 							<td>{{track.name}}</td>
 							<td class="d-none d-sm-table-cell">

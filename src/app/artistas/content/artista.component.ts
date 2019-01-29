@@ -68,6 +68,11 @@ export class ArtistaComponent extends InComponent implements OnInit {
 		this.artistasService.getTopTracks().subscribe(
 			data => {
 				this.topTracks = data.tracks;
+
+				this.topTracks.forEach( (item) => {
+					this.checkFavoriteMusic(item);
+				})
+
 			}, error => {
 				console.error(error);
 			}
@@ -89,6 +94,24 @@ export class ArtistaComponent extends InComponent implements OnInit {
 		}
 
 		this.isFavorite = false;
+	}
+
+	public saveFavoriteMusic(item: IMusica) {
+		this.favoritosService.saveFavorite(item, 'musicas');
+		item.isFavorite = !item.isFavorite;
+	}
+
+	public checkFavoriteMusic(item: IMusica): void {
+		const favorites: string[] = this.favoritosService.getFavorites('musicas');
+		for(let i = 0; i < favorites.length; i++) {
+			if(favorites[i] === item.id) {
+				item.isFavorite = true;
+				return;
+			}
+		}
+
+		item.isFavorite = false;
+		return;
 	}
 
 	private loadArtistData() {
