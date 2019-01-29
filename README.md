@@ -10,6 +10,6 @@ Faça o download ou clone, execute `npm install` para instalar dependências em 
 
 ## Teck Stack
 
-Angular 7.2.2
-Bootstrap 4.2.1
-SASS
+Angular 7.2.2  
+Bootstrap 4.2.1  
+SASS  
