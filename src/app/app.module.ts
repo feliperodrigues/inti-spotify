@@ -13,6 +13,7 @@ import { CallbackComponent } from './callback/callback.component';
 import { UserComponent } from './user/user.component';
 import { MobileMenuComponent } from './shared/mobile-menu.component';
 import { DialogConfirmComponent } from './shared/dialog-confirm.component';
+import { SimpleNotificationsModule } from 'angular2-notifications';
 
 registerLocaleData(localePt);
 
@@ -30,6 +31,8 @@ registerLocaleData(localePt);
 		AppRoutingModule,
 		SharedModule,
 		HttpClientModule
+		HttpClientModule,
+		SimpleNotificationsModule.forRoot(),
 	],
 	providers: [
 		{ provide: LOCALE_ID, useValue: 'pt' }

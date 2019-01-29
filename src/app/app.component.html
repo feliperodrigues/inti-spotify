@@ -1,7 +1,7 @@
 <app-user></app-user>
 
 <div class="app-sidebar" *ngIf="userService.user">
-	<img class="logo" src="../assets/img/logo.png" routerLink="/artistas"/>
+	<img class="logo" src="https://innercoders.com.br/inti-spotify/assets/img/logo.png" routerLink="/artistas"/>
 
 	<div class="main-menu">
 		<ul>
@@ -30,3 +30,5 @@
 </div>
 
 <app-mobile-menu *ngIf="userService.user"></app-mobile-menu>
+
+<simple-notifications [options]="{timeOut: 8000, lastOnBottom: true, position: ['bottom', 'right']}"></simple-notifications>

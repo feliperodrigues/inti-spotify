@@ -1,0 +1,52 @@
+.simple-notification {
+	transition: none;
+	&.success, &.error, &.alert, &.warn, &.info {
+		background: darken($bg-color, 2%) !important;
+		border-radius: 10px;
+		overflow: hidden;
+		color: #fff !important;
+
+		.sn-progress-loader {
+			height: 3px;
+		}
+	}
+
+	&.success {
+		span { background: $success !important; }
+		.icon svg { fill: $success }
+	}
+	&.error {
+		span { background: $danger !important; }
+		.icon svg { fill: $danger }
+	}
+	&.alert {
+		span { background: $primary !important; }
+		.icon svg { fill: $primary }
+	}
+	&.warn {
+		span { background: $warning !important; }
+		.icon svg { fill: $warning }
+	}
+	&.info {
+		span { background: $info !important; }
+		.icon svg { fill: $info }
+	}
+
+	.sn-title, .sn-content {
+		font-family: Montserrat, sans-serif !important;
+		color: #fff !important;
+	}
+
+	.sn-title {
+		font-size: 16px !important;
+	}
+	.sn-content {
+		font-size: 14px !important;
+		color: rgba(#fff, 0.4) !important;
+	}
+
+	.icon {
+		width: 50px !important;
+		height: 50px !important;
+	}
+}
