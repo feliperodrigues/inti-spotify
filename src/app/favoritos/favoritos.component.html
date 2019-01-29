@@ -93,14 +93,11 @@
 								play_circle_outline
 							</i>
 						</a>
-						<a mat-icon-button target="_blank" matTooltip="Adicionar favoritos" (click)="saveFavorite(track)">
-							<i class="material-icons" *ngIf="!track.isFavorite">
-								add
-							</i>
+						<button mat-icon-button matTooltip="Remover favoritos" (click)="saveFavorite(track, 'musicas')">
 							<i class="material-icons" *ngIf="track.isFavorite">
 								check
 							</i>
-						</a>
+						</button>
 					</td>
 					<td><img class="track-album" src="{{track.album.images[0].url}}" matTooltip="{{track.album.name}}" (click)="goToAlbum(track.album)"/></td>
 					<td>

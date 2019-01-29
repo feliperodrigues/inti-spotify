@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { MatDialog } from '@angular/material';
 
 import { InComponent } from '@app/shared';
 
 import { UserService } from './user.service';
 import { FavoritosService } from '../favoritos/favoritos.service';
 import { DialogConfirmComponent } from '../shared/dialog-confirm.component';
-import { MatDialog } from '@angular/material';
 
 @Component({
 	selector: 'app-user',
@@ -42,20 +42,17 @@ export class UserComponent extends InComponent implements OnInit {
 
 	public openLogoutDialog() {
 		const dialogRef = this.dialog.open(DialogConfirmComponent);
+		dialogRef.componentInstance.description = 'Seus favoritos será apagado.';
 		dialogRef.afterClosed().subscribe(result => {
 			if (result) {
-				this.logout()
+				this.logout();
 			}
 		});
 	}
 
 	public logout() {
-		localStorage.removeItem('access_token');
+		localStorage.clear();
 		this.userService.user = undefined;
 		this.router.navigate(['/']);
-	}
-
-	public get accessToken() :string {
-		return localStorage.getItem('access_token');
 	}
 }

@@ -23,7 +23,6 @@ export class FavoritosService extends AppService {
 		}
 
 		localStorage.setItem(type, JSON.stringify(items));
-		console.log(localStorage.getItem(type));
 	}
 
 	public getFavorites(type :string = 'all') :any[] {
