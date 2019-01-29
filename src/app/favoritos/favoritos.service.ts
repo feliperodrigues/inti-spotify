@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { IAlbum, IArtista, IMusica } from '@app/model';
 
 import { AppService } from '../app.service';
+import { NotificationsService } from 'angular2-notifications';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class FavoritosService extends AppService {
 
-	public constructor() {
+	public constructor(private notification:NotificationsService) {
 		super();
 	}
 
@@ -18,8 +19,8 @@ export class FavoritosService extends AppService {
 		items.push(item.id);
 
 		if(localStorage.getItem(type)) {
-			items = JSON.parse(localStorage.getItem(type));
-			items = this.addRemoveItem(items, item.id);
+			items = this.getFavorites(type);
+			items = this.addRemoveItem(items, item);
 		}
 
 		localStorage.setItem(type, JSON.stringify(items));
@@ -46,14 +47,16 @@ export class FavoritosService extends AppService {
 		return this.getFavorites().length;
 	}
 
-	private addRemoveItem(items: string[], id: string): string[] {
-		const index = items.indexOf(id);
+	private addRemoveItem(items: string[], item: IArtista | IAlbum | IMusica): string[] {
+		const index = items.indexOf(item.id);
 		if (index === -1) {
-			items.push(id);
+			items.push(item.id);
+			this.notification.success('INTI Spotify', '\"' + item.name + '\" foi adicionado no seus favoritos.');
 			return items;
 		}
 
 		items.splice(index, 1);
+		this.notification.warn('INTI Spotify', '\"' + item.name + '\" foi removido do seus favoritos.');
 		return items;
 	}
 }

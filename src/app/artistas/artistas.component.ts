@@ -6,6 +6,7 @@ import { IArtista } from '@app/model';
 
 import { ArtistasService } from './artistas.service';
 import { UserService } from '../user/user.service';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
 	selector: 'app-artistas',
