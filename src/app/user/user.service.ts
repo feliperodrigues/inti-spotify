@@ -10,7 +10,6 @@ import { AppService } from '../app.service';
 export class UserService extends AppService {
 
 	public user:IUser;
-	public nextPath: string;
 
 	constructor(private http: HttpClient) {
 		super();
