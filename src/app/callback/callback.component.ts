@@ -1,25 +1,55 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+
 import { UserService } from '../user/user.service';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-callback',
 	template: ''
 })
-export class CallbackComponent {
+export class CallbackComponent implements OnInit, OnDestroy {
 
-	constructor(private activatedRoute:ActivatedRoute, private router:Router, private userService :UserService) {
-		localStorage.setItem('access_token', this.activatedRoute.snapshot.fragment.split('&')[0].split('=')[1]);
+	private sub: Subscription;
 
+	constructor(private userService :UserService, private activatedRoute:ActivatedRoute, private router:Router) {
+		this.sub = this.router.events.subscribe((val) => {
+			if (val instanceof NavigationEnd) {
+				if (this.activatedRoute.snapshot.fragment) {
+					localStorage.setItem('access_token', this.activatedRoute.snapshot.fragment.split('&')[0].split('=')[1]);
+
+					this.spotifyMe();
+					return;
+				}
+
+				this.router.navigate(['/artistas']);
+			}
+		});
+	}
+
+	ngOnInit() {
+	}
+
+	private spotifyMe(): void {
 		this.userService.spotifyMe().subscribe(
 			data => {
 				this.userService.user = data;
 
-				this.router.navigate([localStorage.getItem('nextUrl')]);
-				localStorage.removeItem('nextUrl');
+				if(localStorage.getItem('nextUrl')) {
+					this.router.navigate([localStorage.getItem('nextUrl')]);
+					localStorage.removeItem('nextUrl');
+					return;
+				}
+
+				this.router.navigate(['/artistas']);
+
 			}, error => {
 				console.error(error);
 			}
 		);
 	}
+
+	 ngOnDestroy() {
+		 this.sub.unsubscribe();
+	 }
 }
